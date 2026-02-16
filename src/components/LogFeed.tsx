@@ -26,7 +26,6 @@ export default function LogFeed({ data }: { data: BusEntry[] }) {
 
   const filtered = data
     .filter(e => filter === 'ALL' || e.type === filter)
-    .slice(-50)
     .reverse();
 
   return (
