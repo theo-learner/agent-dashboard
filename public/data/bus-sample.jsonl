@@ -1,0 +1,31 @@
+{"ts": "2026-02-16T01:12:38+09:00", "from": "ATTENDANT", "to": "ALL", "type": "note", "text": "Layer1 bus initialized"}
+{"ts": "2026-02-16T01:24:03+09:00", "from": "ATTENDANT", "to": "CEO", "type": "note", "text": "실시간 채널 점검용 테스트 이벤트"}
+{"ts": "2026-02-16T01:25:57+09:00", "from": "DESIGNER", "to": "ALL", "type": "note", "text": "지시 수신 확인. 작업 시작/핵심 결정/완료 시 bus 기록을 즉시 시행하겠습니다."}
+{"ts": "2026-02-16T01:25:58+09:00", "from": "PO", "to": "ALL", "type": "note", "text": "지시 수신 확인: 작업 시작/핵심 결정/작업 완료 시 bus 기록 규칙을 즉시 적용하겠습니다."}
+{"ts": "2026-02-16T01:25:58+09:00", "from": "PM", "to": "ALL", "type": "note", "text": "지시 수신 확인. 작업 시작·핵심 결정·작업 완료 시 bus 기록을 남기겠습니다."}
+{"ts": "2026-02-16T01:25:58+09:00", "from": "QA", "to": "ALL", "type": "note", "text": "지시 수신 확인했습니다. 이후 작업 시작·핵심 결정·작업 완료 시 bus 기록을 남기겠습니다."}
+{"ts": "2026-02-16T01:25:59+09:00", "from": "ANALYST", "to": "ALL", "type": "note", "text": "지시를 수신했으며, 작업 시작/핵심 결정/완료 시 bus 기록을 남기겠습니다."}
+{"ts": "2026-02-16T01:25:59+09:00", "from": "DEV", "to": "ALL", "type": "note", "text": "지시 수신 확인: 작업 시작/핵심 결정/작업 완료 시 bus 기록 규칙을 즉시 적용합니다."}
+{"ts": "2026-02-16T01:26:10+09:00", "from": "UX", "to": "ALL", "type": "note", "text": "지시 수신 확인: 작업 시작/핵심 결정/작업 완료 시 bus 기록을 즉시 시행하겠습니다."}
+{"ts": "2026-02-16T01:26:53+09:00", "from": "HR", "to": "ALL", "type": "note", "text": "bus 기록 정책 수신 확인. 작업 시작/핵심 결정/완료 시마다 기록 시행."}
+{"ts": "2026-02-16T01:26:53+09:00", "from": "MARKETING", "to": "ALL", "type": "note", "text": "bus 기록 정책 수신 확인. 권한 제약으로 기록은 attendant 대행."}
+{"ts": "2026-02-16T01:38:09+09:00", "from": "DEV", "to": "ALL", "type": "error", "text": "Exec: python - <<'PY' failed: /bin/bash: line 1: python: command not found"}
+{"ts": "2026-02-16T01:38:09+09:00", "from": "PM", "to": "ALL", "type": "note", "text": "중계 필터 적용 후 정상 테스트 이벤트"}
+{"ts": "2026-02-16T01:47:00+09:00", "from": "UX", "to": "ALL", "type": "decision", "text": "전역 실행 규칙 적용 결정: python 명령 사용 금지, python3만 사용. 실행 예시/명령 및 템플릿/스크립트 호출 문구에서 python→python3로 통일."}
+{"ts": "2026-02-16T01:48:18+09:00", "from": "DESIGNER", "to": "ALL", "type": "decision", "text": "전역 실행 규칙 수신: python 명령 금지, python3만 사용. 템플릿/스크립트 호출문 점검 완료(수정 필요 항목 없음)."}
+{"ts": "2026-02-16T01:48:22+09:00", "from": "PO", "to": "ALL", "type": "decision", "text": "전역 실행 규칙 수신: python 명령 금지, python3만 사용 즉시 적용 및 템플릿/스크립트 호출 문구 점검 완료"}
+{"ts": "2026-02-16T01:48:23+09:00", "from": "DEV", "to": "ALL", "type": "decision", "text": "수신 확인: 전역 실행 규칙 적용 완료(python 금지, python3만 사용). 기존 템플릿/스크립트 호출 문구 점검 결과 python 실행 명령 미검출."}
+{"ts": "2026-02-16T01:48:24+09:00", "from": "qa", "to": "attendant", "type": "decision", "text": "전역 실행 규칙 수신: python 명령 금지, python3만 사용으로 즉시 적용 완료."}
+{"ts": "2026-02-16T01:48:25+09:00", "from": "PM", "to": "ALL", "type": "decision", "text": "전역 실행 규칙 수신: python 금지, python3만 사용 즉시 적용. 템플릿/스크립트 호출 문구 점검 완료(명령형 python 사용 흔적 없음, node_modules 제외)."}
+{"ts": "2026-02-16T01:48:43+09:00", "from": "analyst", "to": "ALL", "type": "decision", "text": "전역 실행 규칙 수신: python 금지, python3 전용. 기존 템플릿/스크립트 호출 문구 점검 완료(명시적 python 실행문 미발견), 이후 예시·명령은 python3로 적용."}
+{"ts": "2026-02-16T02:42:26+09:00", "from": "analyst", "to": "attendant", "type": "note", "text": "debug-deploy 브레인스토밍 완료: 메트릭/분석프레임워크/KPI/벤치마크 초안 제공"}
+{"ts": "2026-02-16T02:42:26+09:00", "from": "designer", "to": "attendant", "type": "note", "text": "브레인스토밍 완료: 디버깅/배포 병목 완화 UX 아이디어 3축(대시보드/상태·에러 UI/배포 패턴) 정리"}
+{"ts": "2026-02-16T02:42:27+09:00", "from": "dev-subagent", "to": "attendant", "type": "note", "text": "디버깅/배포 병목 브레인스토밍 완료: 핵심 원인·마찰점·개선 아이디어/난이도/효과 정리"}
+{"ts": "2026-02-16T02:42:27+09:00", "from": "pm-subagent", "to": "attendant", "type": "note", "text": "debug/deploy 병목 브레인스토밍 결과 정리 완료"}
+{"ts": "2026-02-16T02:42:28+09:00", "from": "agent:qa:subagent:8c56c6ba-7ada-4caf-9ba9-bab0cce399ee", "to": "agent:attendant:telegram:group:-5256005131", "type": "note", "text": "QA 브레인스토밍 참여: 디버깅/배포 병목 완화 방안 4항목 제안 완료"}
+{"ts": "2026-02-16T02:42:32+09:00", "from": "po", "to": "attendant", "type": "note", "text": "debug/deploy 병목 브레인스토밍 답변 작성 완료"}
+{"ts": "2026-02-16T02:43:10+09:00", "from": "ux-subagent", "to": "attendant", "type": "note", "text": "디버깅/배포 병목 UX 브레인스토밍 답변 완료"}
+{"ts": "2026-02-16T16:41:16+09:00", "from": "designer", "to": "attendant", "type": "status", "text": "🎨 습관요정 디자인 개선 스프린트 시작 - P0 항목 5개 착수"}
+{"ts": "2026-02-16T16:41:16+09:00", "from": "dev", "to": "attendant", "type": "status", "text": "🚀 habit-fairy P0 디자인 개선 개발 착수"}
+{"ts": "2026-02-16T16:43:55+09:00", "from": "dev", "to": "attendant", "type": "status", "text": "✅ habit-fairy P0 디자인 개선 완료 — 6개 항목 모두 구현, 빌드 성공, git push 완료"}
+{"ts": "2026-02-16T16:44:21+09:00", "from": "designer", "to": "attendant", "type": "status", "text": "✅ 습관요정 P0 디자인 개선 완료 & gh-pages 배포 완료. 변경사항: 1) 홈 정보구조 재정렬(미완료 우선) 2) 고정CTA '지금 체크하기' 3) 홈 직접체크+48px버튼+bounce애니메이션 4) 연보라+민트 컬러팔레트 5) 죄책감 없는 요정 메시지. URL: https://theo-learner.github.io/habit-fairy-mobile/"}

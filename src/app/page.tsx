@@ -1,65 +1,87 @@
-import Image from "next/image";
+'use client';
+
+import useSWR from 'swr';
+import { useState } from 'react';
+import AgentCard from '@/components/AgentCard';
+import Timeline from '@/components/Timeline';
+import LogFeed from '@/components/LogFeed';
+
+const fetcher = (url: string) => fetch(url).then(r => r.json());
+
+const AGENTS = ['main', 'attendant', 'po', 'pm', 'dev', 'qa', 'marketing', 'ux', 'hr', 'analyst', 'designer'];
 
 export default function Home() {
+  const { data: statusData, isLoading: statusLoading } = useSWR('/api/status', fetcher, { refreshInterval: 30000 });
+  const { data: busData, isLoading: busLoading } = useSWR('/api/bus', fetcher, { refreshInterval: 30000 });
+  const [lastUpdated, setLastUpdated] = useState(new Date());
+
+  // Update timestamp when data refreshes
+  if (statusData && !statusLoading) {
+    const now = new Date();
+    if (now.getTime() - lastUpdated.getTime() > 25000) {
+      setTimeout(() => setLastUpdated(new Date()), 0);
+    }
+  }
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex min-h-screen w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
+    <main className="max-w-7xl mx-auto px-4 py-6">
+      {/* Header */}
+      <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-2">
+        <h1 className="text-2xl sm:text-3xl font-bold">
+          🦞 가재 에이전트 대시보드
+        </h1>
+        <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
+          최종 갱신: {lastUpdated.toLocaleTimeString('ko-KR')}
+        </span>
+      </header>
+
+      {/* Agent Status Cards */}
+      <section className="mb-8">
+        <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--purple-light)' }}>
+          에이전트 상태
+        </h2>
+        {statusLoading ? (
+          <div className="text-center py-8" style={{ color: 'var(--text-secondary)' }}>로딩 중...</div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+            {AGENTS.map(agent => (
+              <AgentCard
+                key={agent}
+                name={agent}
+                data={statusData?.[agent]}
+              />
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Timeline */}
+      <section className="mb-8">
+        <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--purple-light)' }}>
+          24시간 타임라인
+        </h2>
+        <div className="rounded-xl p-4" style={{ background: 'var(--bg-card)' }}>
+          {busLoading ? (
+            <div className="text-center py-8" style={{ color: 'var(--text-secondary)' }}>로딩 중...</div>
+          ) : (
+            <Timeline data={busData || []} />
+          )}
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+      </section>
+
+      {/* Log Feed */}
+      <section>
+        <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--purple-light)' }}>
+          실시간 로그 피드
+        </h2>
+        <div className="rounded-xl p-4" style={{ background: 'var(--bg-card)' }}>
+          {busLoading ? (
+            <div className="text-center py-8" style={{ color: 'var(--text-secondary)' }}>로딩 중...</div>
+          ) : (
+            <LogFeed data={busData || []} />
+          )}
         </div>
-      </main>
-    </div>
+      </section>
+    </main>
   );
 }
