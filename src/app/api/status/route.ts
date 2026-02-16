@@ -45,14 +45,14 @@ export async function GET() {
     const lastTs = last ? new Date(last.ts).getTime() : 0;
     const diffMin = last ? (now - lastTs) / 60000 : Infinity;
 
-    const doneCount = agentEntries.filter(e => e.type === 'done').length;
+    const doneCount = agentEntries.filter(e => e.type === 'done' || e.type === 'status').length;
     const errorCount = agentEntries.filter(e => e.type === 'error').length;
     const total = doneCount + errorCount;
     const confidence = total > 0 ? Math.round((doneCount / total) * 100) : 100;
 
     let status = 'red';
-    if (diffMin <= 10) status = 'green';
-    else if (diffMin <= 60) status = 'yellow';
+    if (diffMin <= 60) status = 'green';
+    else if (diffMin <= 360) status = 'yellow';
     if (agentEntries.some(e => e.type === 'error') && agentEntries[agentEntries.length - 1]?.type === 'error') {
       status = 'red';
     }
