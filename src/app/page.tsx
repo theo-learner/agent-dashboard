@@ -2,9 +2,14 @@
 
 import useSWR from 'swr';
 import { useState } from 'react';
+import dynamic from 'next/dynamic';
 import AgentCard from '@/components/AgentCard';
-import Timeline from '@/components/Timeline';
 import LogFeed from '@/components/LogFeed';
+
+const Timeline = dynamic(() => import('@/components/Timeline'), {
+  loading: () => <div className="text-center py-8" style={{ color: 'var(--text-secondary)' }}>차트 로딩 중...</div>,
+  ssr: false,
+});
 
 const fetcher = (url: string) => fetch(url).then(r => r.json());
 
