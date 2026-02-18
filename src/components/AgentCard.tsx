@@ -43,6 +43,8 @@ export default function AgentCard({ name, data }: { name: string; data?: AgentDa
         <div
           className={`w-3 h-3 rounded-full ${colors.pulse}`}
           style={{ backgroundColor: colors.dot }}
+          role="img"
+          aria-label={`Status: ${status}`}
         />
         <span className="text-sm font-medium truncate">
           {AGENT_EMOJI[name] || '🔵'} {name}

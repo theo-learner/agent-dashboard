@@ -5,9 +5,10 @@ import { useState } from 'react';
 import dynamic from 'next/dynamic';
 import AgentCard from '@/components/AgentCard';
 import LogFeed from '@/components/LogFeed';
+import { t } from '@/lib/i18n';
 
 const Timeline = dynamic(() => import('@/components/Timeline'), {
-  loading: () => <div className="text-center py-8" style={{ color: 'var(--text-secondary)' }}>차트 로딩 중...</div>,
+  loading: () => <div className="text-center py-8" style={{ color: 'var(--text-secondary)' }} role="status">{t('status.chartLoading')}</div>,
   ssr: false,
 });
 
@@ -20,7 +21,6 @@ export default function Home() {
   const { data: busData, isLoading: busLoading } = useSWR('/api/bus', fetcher, { refreshInterval: 30000 });
   const [lastUpdated, setLastUpdated] = useState(new Date());
 
-  // Update timestamp when data refreshes
   if (statusData && !statusLoading) {
     const now = new Date();
     if (now.getTime() - lastUpdated.getTime() > 25000) {
@@ -29,59 +29,53 @@ export default function Home() {
   }
 
   return (
-    <main className="max-w-7xl mx-auto px-4 py-6">
-      {/* Header */}
+    <main className="max-w-7xl mx-auto px-4 py-6" role="main">
       <header className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-8 gap-2">
         <h1 className="text-2xl sm:text-3xl font-bold">
-          🦞 가재 에이전트 대시보드
+          {t('dashboard.title')}
         </h1>
-        <span className="text-sm" style={{ color: 'var(--text-secondary)' }}>
-          최종 갱신: {lastUpdated.toLocaleTimeString('ko-KR')}
+        <span className="text-sm" style={{ color: 'var(--text-secondary)' }} aria-live="polite">
+          {t('dashboard.lastUpdated')}: {lastUpdated.toLocaleTimeString('ko-KR')}
         </span>
       </header>
 
-      {/* Agent Status Cards */}
-      <section className="mb-8">
+      <section className="mb-8" aria-label={t('section.agentStatus')}>
         <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--purple-light)' }}>
-          에이전트 상태
+          {t('section.agentStatus')}
         </h2>
         {statusLoading ? (
-          <div className="text-center py-8" style={{ color: 'var(--text-secondary)' }}>로딩 중...</div>
+          <div className="text-center py-8" style={{ color: 'var(--text-secondary)' }} role="status">{t('status.loading')}</div>
         ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3" role="list">
             {AGENTS.map(agent => (
-              <AgentCard
-                key={agent}
-                name={agent}
-                data={statusData?.[agent]}
-              />
+              <div key={agent} role="listitem">
+                <AgentCard name={agent} data={statusData?.[agent]} />
+              </div>
             ))}
           </div>
         )}
       </section>
 
-      {/* Timeline */}
-      <section className="mb-8">
+      <section className="mb-8" aria-label={t('section.timeline')}>
         <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--purple-light)' }}>
-          24시간 타임라인
+          {t('section.timeline')}
         </h2>
         <div className="rounded-xl p-4" style={{ background: 'var(--bg-card)' }}>
           {busLoading ? (
-            <div className="text-center py-8" style={{ color: 'var(--text-secondary)' }}>로딩 중...</div>
+            <div className="text-center py-8" style={{ color: 'var(--text-secondary)' }} role="status">{t('status.loading')}</div>
           ) : (
             <Timeline data={busData || []} />
           )}
         </div>
       </section>
 
-      {/* Log Feed */}
-      <section>
+      <section aria-label={t('section.logFeed')}>
         <h2 className="text-lg font-semibold mb-4" style={{ color: 'var(--purple-light)' }}>
-          실시간 로그 피드
+          {t('section.logFeed')}
         </h2>
         <div className="rounded-xl p-4" style={{ background: 'var(--bg-card)' }}>
           {busLoading ? (
-            <div className="text-center py-8" style={{ color: 'var(--text-secondary)' }}>로딩 중...</div>
+            <div className="text-center py-8" style={{ color: 'var(--text-secondary)' }} role="status">{t('status.loading')}</div>
           ) : (
             <LogFeed data={busData || []} />
           )}
