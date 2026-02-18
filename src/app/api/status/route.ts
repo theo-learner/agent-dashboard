@@ -34,6 +34,7 @@ function normalizeAgent(from: string): string {
 }
 
 export async function GET() {
+  try {
   const entries = parseBusFile();
   const now = Date.now();
 
@@ -72,4 +73,7 @@ export async function GET() {
   }
 
   return NextResponse.json(statusMap);
+  } catch {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
 }

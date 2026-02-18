@@ -26,7 +26,10 @@ function parseBusFile(): BusEntry[] {
 }
 
 export async function GET() {
-  const entries = parseBusFile();
-  
-  return NextResponse.json(entries);
+  try {
+    const entries = parseBusFile();
+    return NextResponse.json(entries);
+  } catch {
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
 }
