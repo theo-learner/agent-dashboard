@@ -10,13 +10,13 @@ interface BusEntry {
   text: string;
 }
 
-const TYPE_CONFIG: Record<string, { icon: string; color: string }> = {
-  note: { icon: '📝', color: '#3b82f6' },
-  request: { icon: '📨', color: '#f59e0b' },
-  decision: { icon: '⚡', color: '#8b5cf6' },
-  error: { icon: '❌', color: '#ef4444' },
-  done: { icon: '✅', color: '#22c55e' },
-  status: { icon: '📊', color: '#06b6d4' },
+const TYPE_CONFIG: Record<string, { icon: string; colorClass: string }> = {
+  note: { icon: '📝', colorClass: 'text-blue-500' },
+  request: { icon: '📨', colorClass: 'text-amber-500' },
+  decision: { icon: '⚡', colorClass: 'text-violet-500' },
+  error: { icon: '❌', colorClass: 'text-red-500' },
+  done: { icon: '✅', colorClass: 'text-green-500' },
+  status: { icon: '📊', colorClass: 'text-cyan-500' },
 };
 
 const FILTERS = ['ALL', 'note', 'request', 'decision', 'error', 'done', 'status'];
