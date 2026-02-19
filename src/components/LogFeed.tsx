@@ -36,6 +36,8 @@ export default function LogFeed({ data }: { data: BusEntry[] }) {
           <button
             key={f}
             onClick={() => setFilter(f)}
+            aria-label={`로그 필터: ${f}`}
+            aria-pressed={filter === f}
             className="px-3 py-1 rounded-full text-xs font-medium transition-all"
             style={{
               background: filter === f ? 'var(--purple-accent)' : 'var(--bg-secondary)',

@@ -12,7 +12,13 @@ const Timeline = dynamic(() => import('@/components/Timeline'), {
   ssr: false,
 });
 
-const fetcher = (url: string) => fetch(url).then(r => r.json());
+const fetcher = (url: string) =>
+  fetch(url)
+    .then(r => {
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    })
+    .catch((e) => { throw e; });
 
 const AGENTS = ['main', 'attendant', 'po', 'pm', 'dev', 'qa', 'marketing', 'ux', 'hr', 'analyst', 'designer'];
 

@@ -12,6 +12,7 @@ export default function Error({ reset }: { error: Error & { digest?: string }; r
       </p>
       <button
         onClick={reset}
+        aria-label={t('error.retry')}
         className="px-4 py-2 rounded-lg text-sm font-medium transition-colors"
         style={{ background: 'var(--purple-light)', color: '#fff' }}
       >
