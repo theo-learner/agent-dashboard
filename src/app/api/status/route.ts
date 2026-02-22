@@ -14,11 +14,23 @@ interface BusEntry {
   text: string;
 }
 
-function parseBusFile(): BusEntry[] {
-  const busPath = process.env.BUS_FILE_PATH || path.join(process.cwd(), 'public/data/bus-sample.jsonl');
+function getBusPath(): string | null {
+  if (process.env.BUS_FILE_PATH) return process.env.BUS_FILE_PATH;
+
+  const enableSample = process.env.ENABLE_SAMPLE_DATA === 'true';
+  if (enableSample) return path.join(process.cwd(), 'public/data/bus-sample.jsonl');
+
+  return null;
+}
+
+function parseBusFile(busPath: string): BusEntry[] {
   try {
     const content = fs.readFileSync(busPath, 'utf-8');
-    return content.trim().split('\n').filter(Boolean).map(l => JSON.parse(l));
+    return content
+      .trim()
+      .split('\n')
+      .filter(Boolean)
+      .map(l => JSON.parse(l));
   } catch {
     return [];
   }
@@ -35,8 +47,16 @@ function normalizeAgent(from: string): string {
 
 export async function GET() {
   try {
-  const entries = parseBusFile();
-  const now = Date.now();
+    const busPath = getBusPath();
+    if (!busPath) {
+      return NextResponse.json(
+        { error: 'BUS_FILE_PATH not configured (set BUS_FILE_PATH or ENABLE_SAMPLE_DATA=true)' },
+        { status: 503 }
+      );
+    }
+
+    const entries = parseBusFile(busPath);
+    const now = Date.now();
 
   const statusMap: Record<string, { status: string; lastActivity: string; confidence: number; lastMessage: string; counts: Record<string, number> }> = {};
 

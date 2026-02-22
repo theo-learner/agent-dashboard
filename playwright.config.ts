@@ -8,7 +8,7 @@ export default defineConfig({
     headless: true,
   },
   webServer: {
-    command: 'npm run start',
+    command: 'npm run build && npm run start',
     port: 3000,
     timeout: 30000,
     reuseExistingServer: true,

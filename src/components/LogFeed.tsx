@@ -10,13 +10,20 @@ interface BusEntry {
   text: string;
 }
 
-const TYPE_CONFIG: Record<string, { icon: string; colorClass: string }> = {
-  note: { icon: '📝', colorClass: 'text-blue-500' },
-  request: { icon: '📨', colorClass: 'text-amber-500' },
-  decision: { icon: '⚡', colorClass: 'text-violet-500' },
-  error: { icon: '❌', colorClass: 'text-red-500' },
-  done: { icon: '✅', colorClass: 'text-green-500' },
-  status: { icon: '📊', colorClass: 'text-cyan-500' },
+const TYPE_CONFIG: Record<
+  string,
+  {
+    icon: string;
+    textClass: string;
+    badgeClass: string;
+  }
+> = {
+  note: { icon: '📝', textClass: 'text-blue-400', badgeClass: 'bg-blue-500/20 text-blue-200' },
+  request: { icon: '📨', textClass: 'text-amber-400', badgeClass: 'bg-amber-500/20 text-amber-200' },
+  decision: { icon: '⚡', textClass: 'text-violet-400', badgeClass: 'bg-violet-500/20 text-violet-200' },
+  error: { icon: '❌', textClass: 'text-red-400', badgeClass: 'bg-red-500/20 text-red-200' },
+  done: { icon: '✅', textClass: 'text-green-400', badgeClass: 'bg-green-500/20 text-green-200' },
+  status: { icon: '📊', textClass: 'text-cyan-400', badgeClass: 'bg-cyan-500/20 text-cyan-200' },
 };
 
 const FILTERS = ['ALL', 'note', 'request', 'decision', 'error', 'done', 'status'];
@@ -67,10 +74,10 @@ export default function LogFeed({ data }: { data: BusEntry[] }) {
                 <span className="text-lg shrink-0">{cfg.icon}</span>
                 <div className="min-w-0 flex-1">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="text-xs font-bold" style={{ color: cfg.color }}>
+                    <span className={`text-xs font-bold ${cfg.textClass}`}>
                       {entry.from}
                     </span>
-                    <span className="text-xs px-1.5 py-0.5 rounded" style={{ background: cfg.color + '20', color: cfg.color }}>
+                    <span className={`text-xs px-1.5 py-0.5 rounded ${cfg.badgeClass}`}>
                       {entry.type}
                     </span>
                     <span className="text-xs ml-auto shrink-0" style={{ color: 'var(--text-secondary)' }}>
